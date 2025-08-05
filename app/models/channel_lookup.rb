@@ -1,0 +1,2 @@
+class ChannelLookup < ApplicationRecord
+end
