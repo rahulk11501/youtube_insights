@@ -4,7 +4,7 @@ class ChannelLookupsController < ApplicationController
 
   # POST /channel_lookups
   def create
-    fetcher = YouTubeFetcher.new
+    fetcher = YoutubeFetcher.new
     channel_data = fetcher.fetch_channel(params[:channel_id])
 
     if channel_data

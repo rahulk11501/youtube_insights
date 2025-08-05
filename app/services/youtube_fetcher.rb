@@ -1,5 +1,5 @@
 # app/services/youtube_fetcher.rb
-class YouTubeFetcher
+class YoutubeFetcher
   include HTTParty
   base_uri 'https://www.googleapis.com/youtube/v3'
 
