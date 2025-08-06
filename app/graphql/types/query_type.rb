@@ -30,10 +30,10 @@ module Types
 
     field :channel_lookup, Types::ChannelLookupType, null: true do
       description "Find a channel by ID"
-      argument :id, ID, required: true
+      argument :id, ID, required: true, description: "ID of the channel lookup"
     end
 
-    field :all_channel_lookups, [Types::ChannelLookupType], null: false
+    field :all_channel_lookups, [Types::ChannelLookupType], null: false, description: "Fetch all channel lookups stored in the database"
 
     def channel_lookup(id:)
       ChannelLookup.find_by(id: id)
