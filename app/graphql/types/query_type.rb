@@ -41,6 +41,12 @@ module Types
       argument :query, String, required: true
     end
 
+    # app/graphql/types/query_type.rb
+    field :search_videos, [Types::VideoLookupType], null: false do
+      description "Search for videos by keyword (does not persist)"
+      argument :query, String, required: true
+    end
+
     def channel_lookup(id:)
       ChannelLookup.find_by(id: id)
     end
@@ -52,6 +58,10 @@ module Types
     def search_channels(query:)
       fetcher = YoutubeFetcher.new
       fetcher.search_channels(query)
+    end
+
+    def search_videos(query:)
+      YoutubeFetcher.new.search_videos(query)
     end
   end
 end

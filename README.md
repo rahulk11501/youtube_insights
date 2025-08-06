@@ -19,8 +19,12 @@ A Rails 8 GraphQL-based backend to **search and fetch YouTube channel details** 
   - Includes detailed error messages and fallback handling.
 - 🔁 **Idempotent Mutations**
   - Reuses existing `ChannelLookup` entries when possible.
+- 🎞️ **Search YouTube Videos**
+  - Query videos using a keyword and fetch summary info
+- ➕ **Create or Fetch Video Details**
+  - Input: `videoId`
+  - Stores title, views, likes, comments, publish date, etc.
 - 🔧 Built on **Ruby on Rails 8**, **GraphQL-Ruby**, and **YouTube API v3**
-
 ---
 
 ## 📦 Sample GraphQL Usage
@@ -59,6 +63,31 @@ mutation {
 }
 ```
 
+### 🔍 Search Videos
+
+```graphql
+query {
+  searchVideos(query: "Ruby on Rails") {
+    videoId
+    title
+    thumbnailUrl
+    publishedAt
+  }
+}
+```
+
+### ➕ Create Video Lookup
+```graphql
+mutation {
+  createVideoLookup(videoId: "dQw4w9WgXcQ") {
+    title
+    viewCount
+    likeCount
+    publishedAt
+  }
+}
+```
+
 ---
 ## 🗃️ Models
 
@@ -71,6 +100,16 @@ Stores metadata like:
 - `subscriber_count`, `video_count`, `view_count`
 - `last_fetched_at`
 
+### `VideoLookup`
+
+Stores metadata like:
+
+- `video_id`
+- `title`, `description`, `thumbnail_url`
+- `published_at`
+- `channel_id`, `channel_title`
+- `view_count`, `like_count`, `comment_count`
+- `last_fetched_at`
 ---
 
 ## ⚙️ Setup Instructions
