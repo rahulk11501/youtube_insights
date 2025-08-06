@@ -10,7 +10,7 @@ module Types
     field :thumbnail_url, String
     field :subscriber_count, Integer
     field :video_count, Integer
-    field :view_count, Integer
+    field :view_count, GraphQL::Types::BigInt
     field :last_fetched_at, GraphQL::Types::ISO8601DateTime
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
