@@ -35,12 +35,23 @@ module Types
 
     field :all_channel_lookups, [Types::ChannelLookupType], null: false, description: "Fetch all channel lookups stored in the database"
 
+    
+    field :search_channels, [Types::ChannelLookupType], null: false do
+      description "Search for YouTube channels by keyword or name"
+      argument :query, String, required: true
+    end
+
     def channel_lookup(id:)
       ChannelLookup.find_by(id: id)
     end
 
     def all_channel_lookups
       ChannelLookup.all
+    end
+
+    def search_channels(query:)
+      fetcher = YoutubeFetcher.new
+      fetcher.search_channels(query)
     end
   end
 end

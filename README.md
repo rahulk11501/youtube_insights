@@ -1,24 +1,100 @@
-# README
+# 📺 YouTube Channel Lookup – GraphQL API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Rails 8 GraphQL-based backend to **search and fetch YouTube channel details** using YouTube Data API v3. Ideal for building analytics, discovery tools, or content research platforms.
 
-Things you may want to cover:
+---
 
-* Ruby version
+## 🚀 Features
 
-* System dependencies
+- 🔍 **Search Channels by Name/Keyword**
+  - Returns basic info like title, channelId, description, and thumbnail.
+- 🔐 **Create or Fetch Channel Lookup by**
+  - `channelId`
+  - `channelName`
+  - `handle` (e.g., `@Google`)
+  - Full or partial **YouTube URLs**
+- 📦 **Caching with Smart Timestamping**
+  - Skips re-fetching from YouTube if channel data was retrieved within the last 24 hours.
+- 🧠 **Handles Errors Gracefully**
+  - Includes detailed error messages and fallback handling.
+- 🔁 **Idempotent Mutations**
+  - Reuses existing `ChannelLookup` entries when possible.
+- 🔧 Built on **Ruby on Rails 8**, **GraphQL-Ruby**, and **YouTube API v3**
 
-* Configuration
+---
 
-* Database creation
+## 📦 Sample GraphQL Usage
 
-* Database initialization
+### 🔍 Search Channels
+```graphql
+query {
+  searchChannels(query: "Google Developers") {
+    channelId
+    title
+    description
+    thumbnailUrl
+  }
+}
+```
 
-* How to run the test suite
+### ➕ Create Channel Lookup (by channelId)
+```graphql
+mutation {
+  createChannelLookup(channelId: "UC_x5XG1OV2P6uZZ5FSM9Ttw") {
+    title
+    subscriberCount
+    lastFetchedAt
+  }
+}
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+### ➕ Create Channel Lookup (by YouTube handle or URL)
+```graphql
+mutation {
+  createChannelLookup(handleOrUrl: "https://www.youtube.com/@Google") {
+    title
+    channelId
+    viewCount
+  }
+}
+```
 
-* Deployment instructions
+---
+## 🗃️ Models
 
-* ...
+### `ChannelLookup`
+
+Stores metadata like:
+
+- `channel_id`
+- `title`, `description`, `thumbnail_url`
+- `subscriber_count`, `video_count`, `view_count`
+- `last_fetched_at`
+
+---
+
+## ⚙️ Setup Instructions
+
+- Project setup
+```bash
+bundle install
+rails db:create db:migrate
+```
+
+- Set your YouTube API Key:
+
+```bash
+export YOUTUBE_API_KEY=your_api_key_here
+```
+
+- Run the server:
+
+```bash
+rails server
+```
+
+- Access GraphiQL (for testing GraphQL queries):
+
+```
+http://localhost:3000/graphiql
+```

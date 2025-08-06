@@ -21,6 +21,14 @@ module Types
     def create_channel_lookup(channel_id: nil, channel_name: nil, handle_or_url: nil)
       fetcher = YoutubeFetcher.new
 
+      # Try to reuse cached data if it was fetched within the last 24 hours
+      if channel_id.present?
+        existing = ChannelLookup.find_by(channel_id: channel_id)
+        if existing && existing.last_fetched_at.present? && existing.last_fetched_at > 24.hours.ago
+          return existing
+        end
+      end
+
       begin
         channel_data = fetcher.fetch_channel(
           channel_id: channel_id,
