@@ -39,6 +39,9 @@ gem 'httparty' # for API calls
 gem 'dotenv-rails' # to manage API keys safely
 # gem 'chartkick' # for visualizations (optional)
 # gem 'groupdate' # for time-based grouping
+gem 'graphql'             # Main gem for GraphQL in Rails
+gem 'graphiql-rails'
+
 
 
 group :development, :test do
