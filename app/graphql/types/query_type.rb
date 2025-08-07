@@ -56,12 +56,13 @@ module Types
     end
 
     def search_channels(query:)
-      fetcher = YoutubeFetcher.new
+      fetcher = Youtube::ChannelFetcher.new
       fetcher.search_channels(query)
     end
 
     def search_videos(query:)
-      YoutubeFetcher.new.search_videos(query)
+      fetcher = Youtube::VideoFetcher.new
+      fetcher.search_videos(query)
     end
   end
 end

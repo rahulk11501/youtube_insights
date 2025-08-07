@@ -25,7 +25,7 @@ module Types
     end
 
     def create_channel_lookup(channel_id: nil, channel_name: nil, handle_or_url: nil)
-      fetcher = YoutubeFetcher.new
+      fetcher = Youtube::ChannelFetcher.new
 
       # Try to reuse cached data if it was fetched within the last 24 hours
       if channel_id.present?
@@ -67,7 +67,7 @@ module Types
         return video
       end
 
-      data = YoutubeFetcher.new.fetch_video(video_id)
+      data = Youtube::VideoFetcher.new.fetch_video(video_id)
 
       raise GraphQL::ExecutionError, "Video not found or API error" if data.nil?
 
